@@ -4,44 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ami")
-public class Ami {
+@IdClass(AmiPk.class)
+public class Ami extends Utilisateur{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_ami")
-	private int idAmi;
-
 	@Column(name = "id_utilisateur")
-	private int idUtilisateur;
+	private Integer idUtilisateur;
 
 	@ManyToMany
 	@JoinTable(name = "utilisateurs_amis")
 	List<Utilisateur> utilisateurs = new ArrayList<>();
 
-	public int getIdAmi() {
-		return idAmi;
-	}
-
-	public void setIdAmi(int idAmi) {
-		this.idAmi = idAmi;
-	}
-
-	public int getIdUtilisateur() {
+	public Integer getIdUtilisateur() {
 		return idUtilisateur;
 	}
 
-	public void setIdUtilisateur(int idUtilisateur) {
+	public void setIdUtilisateur(Integer idUtilisateur) {
 		this.idUtilisateur = idUtilisateur;
+	}
+
+	public List<Utilisateur> getUtilisateurs() {
+		return utilisateurs;
+	}
+
+	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
+		this.utilisateurs = utilisateurs;
 	}
 
 	public Ami() {
@@ -49,4 +50,9 @@ public class Ami {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Ami(String nom, String prenom, String email, String password) {
+		super(nom, prenom, email, password);
+	}
+
+	
 }

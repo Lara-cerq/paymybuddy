@@ -14,16 +14,16 @@ public class CompteBancaire extends Compte {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_compte")
-	private int idCompte;
+	private Integer idCompte;
 
 	@Column(name = "numero_compte")
 	private String numeroCompte;
 
-	public int getIdCompte() {
+	public Integer getIdCompte() {
 		return idCompte;
 	}
 
-	public void setIdCompte(int idCompte) {
+	public void setIdCompte(Integer idCompte) {
 		this.idCompte = idCompte;
 	}
 
@@ -35,7 +35,7 @@ public class CompteBancaire extends Compte {
 		this.numeroCompte = numeroCompte;
 	}
 
-	public CompteBancaire(int idCompte, String numeroCompte) {
+	public CompteBancaire(Integer idCompte, String numeroCompte) {
 		super();
 		this.idCompte = idCompte;
 		this.numeroCompte = numeroCompte;

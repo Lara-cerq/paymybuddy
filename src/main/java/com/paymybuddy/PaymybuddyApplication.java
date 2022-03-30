@@ -16,7 +16,7 @@ import com.paymybuddy.service.TransactionService;
 import com.paymybuddy.service.UtilisateurService;
 
 @SpringBootApplication
-public class PaymybuddyApplication implements CommandLineRunner {
+public class PaymybuddyApplication {
 
 	@Autowired
 	private UtilisateurService utilisateurService;
@@ -31,42 +31,41 @@ public class PaymybuddyApplication implements CommandLineRunner {
 		SpringApplication.run(PaymybuddyApplication.class, args);
 	}
 
-	@Override
-	@Transactional
-	public void run(String... args) throws Exception {
-		Iterable<Utilisateur> utilisateurs = utilisateurService.getAllUtilisateurs();
-		utilisateurs.forEach(utilisateur -> System.out.println(utilisateur.getNom()));
-
-		Optional<Utilisateur> optUtilisateur = utilisateurService.getUtilisateurById(1);
-		Utilisateur utilisateurId = optUtilisateur.get();
-		System.out.println(utilisateurId.getNom());
-		
-		Utilisateur newUtilisateur= new Utilisateur("cerqueira", "lara", "lara@st;com", "ljsh");
-		newUtilisateur = utilisateurService.addUtilisateur(newUtilisateur);
-		
-		utilisateurs.forEach(utilisateur -> System.out.println(utilisateur.getNom()));
-		
-//		Compte newCompte = new Compte() {
-//		});
-//		newCompte.setTypeCompte("bancaire");
-//		newCompte.setUtilisateur(newUtilisateur);
-//		newCompte= compteService.addCompte(newCompte);
+//	@Override
+//	@Transactional
+//	public void run(String... args) throws Exception {
+//		Iterable<Utilisateur> utilisateurs = utilisateurService.getAllUtilisateurs();
+//		utilisateurs.forEach(utilisateur -> System.out.println(utilisateur.getNom()));
+//
+//		Utilisateur utilisateurFound = utilisateurService.getUtilisateurById(1);
+//		System.out.println(utilisateurFound.getNom());
 //		
-//		Iterable<Compte> comptes = compteService.getAllComptes();
-//		comptes.forEach(compte -> System.out.println(compte.getTypeCompte()));
-		
-		Utilisateur existingUtilisateur= utilisateurService.getUtilisateurById(1).get();
-		
-		existingUtilisateur.setNom("cerqueira");
-		utilisateurService.addUtilisateur(existingUtilisateur);
-		
-		existingUtilisateur= utilisateurService.getUtilisateurById(1).get();
-		
-		System.out.println(existingUtilisateur.getNom());
-		
-//		utilisateurService.deleteById(1);
-		
-		
-	}
+//		Utilisateur newUtilisateur= new Utilisateur("cerqueira", "lara", "lara@st;com", "ljsh");
+//		newUtilisateur = utilisateurService.addUtilisateur(newUtilisateur);
+//		
+//		utilisateurs.forEach(utilisateur -> System.out.println(utilisateur.getNom()));
+//		
+////		Compte newCompte = new Compte() {
+////		});
+////		newCompte.setTypeCompte("bancaire");
+////		newCompte.setUtilisateur(newUtilisateur);
+////		newCompte= compteService.addCompte(newCompte);
+////		
+////		Iterable<Compte> comptes = compteService.getAllComptes();
+////		comptes.forEach(compte -> System.out.println(compte.getTypeCompte()));
+//		
+//		Utilisateur existingUtilisateur= utilisateurService.getUtilisateurById(1);
+//		
+//		existingUtilisateur.setNom("cerqueira");
+//		utilisateurService.addUtilisateur(existingUtilisateur);
+//		
+//		existingUtilisateur= utilisateurService.getUtilisateurById(1);
+//		
+//		System.out.println(existingUtilisateur.getNom());
+//		
+////		utilisateurService.deleteById(1);
+//		
+//		
+//	}
 
 }

@@ -14,18 +14,13 @@ public class TransactionBancaire extends Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_transaction")
-	private int idTransaction;
+	private Integer idTransaction;
 
-	public int getIdTransaction() {
+	public Integer getIdTransaction() {
 		return idTransaction;
 	}
 
-	public void setIdTransaction(int idTransaction) {
-		this.idTransaction = idTransaction;
-	}
-
-	public TransactionBancaire(int idTransaction) {
-		super();
+	public void setIdTransaction(Integer idTransaction) {
 		this.idTransaction = idTransaction;
 	}
 

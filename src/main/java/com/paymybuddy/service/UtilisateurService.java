@@ -1,5 +1,6 @@
 package com.paymybuddy.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,13 @@ public class UtilisateurService {
 	@Autowired
 	 private UtilisateurRepository utilisateurRepository;
 	
-	public Iterable<Utilisateur> getAllUtilisateurs() {
+	public List<Utilisateur> getAllUtilisateurs() {
 		return utilisateurRepository.findAll();
 		
 	}
 	
-	public Optional<Utilisateur> getUtilisateurById(Integer id) {
-		return utilisateurRepository.findById(id);
+	public Utilisateur getUtilisateurById(Integer id) {
+		return utilisateurRepository.getById(id);
 	}
 
 	public Utilisateur addUtilisateur(Utilisateur utilisateur) {

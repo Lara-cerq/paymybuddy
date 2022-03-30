@@ -17,7 +17,7 @@ public abstract class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_transaction")
-	private int idTransaction;
+	private Integer idTransaction;
 
 	@Column(name = "type_transaction")
 	private String typeTransaction;
@@ -33,11 +33,11 @@ public abstract class Transaction {
 	@JoinColumn(name = "id_utilisateur")
 	private Utilisateur utilisateur;
 
-	public int getIdTransaction() {
+	public Integer getIdTransaction() {
 		return idTransaction;
 	}
 
-	public void setIdTransaction(int idTransaction) {
+	public void setIdTransaction(Integer idTransaction) {
 		this.idTransaction = idTransaction;
 	}
 
@@ -73,9 +73,8 @@ public abstract class Transaction {
 		this.utilisateur = utilisateur;
 	}
 
-	public Transaction(int idTransaction, String typeTransaction, double montant, double cout) {
+	public Transaction( String typeTransaction, double montant, double cout) {
 		super();
-		this.idTransaction = idTransaction;
 		this.typeTransaction = typeTransaction;
 		this.montant = montant;
 		this.cout = cout;

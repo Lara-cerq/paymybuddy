@@ -14,17 +14,17 @@ public class ComptePayMyBuddy extends Compte {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_compte")
-	private int idCompte;
+	private Integer idCompte;
 
-	public int getIdCompte() {
+	public Integer getIdCompte() {
 		return idCompte;
 	}
 
-	public void setIdCompte(int idCompte) {
+	public void setIdCompte(Integer idCompte) {
 		this.idCompte = idCompte;
 	}
 
-	public ComptePayMyBuddy(int idCompte) {
+	public ComptePayMyBuddy(Integer idCompte) {
 		super();
 		this.idCompte = idCompte;
 	}

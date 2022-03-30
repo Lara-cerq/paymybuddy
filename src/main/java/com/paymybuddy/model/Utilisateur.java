@@ -7,11 +7,16 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -20,12 +25,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "utilisateur")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Utilisateur {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_utilisateur")
-	private int idUtilisateur;
+	private Integer idUtilisateur;
 
 	@Column(name = "nom")
 	private String nom;
@@ -49,11 +55,11 @@ public class Utilisateur {
 	@JoinTable(name = "utilisateurs_amis", joinColumns = @JoinColumn(name = "id_utilisateur"), inverseJoinColumns = @JoinColumn(name = "id_ami"))
 	List<Ami> amis = new ArrayList<>();
 
-	public int getIdUtilisateur() {
+	public Integer getIdUtilisateur() {
 		return idUtilisateur;
 	}
 
-	public void setIdUtilisateur(int idUtilisateur) {
+	public void setIdUtilisateur(Integer idUtilisateur) {
 		this.idUtilisateur = idUtilisateur;
 	}
 
@@ -103,6 +109,14 @@ public class Utilisateur {
 
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
+	}
+
+	public List<Ami> getAmis() {
+		return amis;
+	}
+
+	public void setAmis(List<Ami> amis) {
+		this.amis = amis;
 	}
 
 	public Utilisateur(String nom, String prenom, String email, String password) {

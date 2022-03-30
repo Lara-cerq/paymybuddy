@@ -17,7 +17,7 @@ public abstract class Compte {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_compte")
-	private int idCompte;
+	private Integer idCompte;
 
 	@Column(name = "type_compte")
 	private String typeCompte;
@@ -26,11 +26,11 @@ public abstract class Compte {
 	@JoinColumn(name = "id_utilisateur")
 	private Utilisateur utilisateur;
 
-	public int getIdCompte() {
+	public Integer getIdCompte() {
 		return idCompte;
 	}
 
-	public void setIdCompte(int idCompte) {
+	public void setIdCompte(Integer idCompte) {
 		this.idCompte = idCompte;
 	}
 
