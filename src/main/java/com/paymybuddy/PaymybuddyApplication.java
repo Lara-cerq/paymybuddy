@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
+import com.paymybuddy.configuration.SpringSecurityConfig;
 import com.paymybuddy.model.Compte;
 import com.paymybuddy.model.Utilisateur;
 import com.paymybuddy.service.CompteService;
@@ -16,16 +20,17 @@ import com.paymybuddy.service.TransactionService;
 import com.paymybuddy.service.UtilisateurService;
 
 @SpringBootApplication
+@ComponentScan({"com.paymybuddy"})
 public class PaymybuddyApplication {
-
-	@Autowired
-	private UtilisateurService utilisateurService;
-	
-	@Autowired
-	private TransactionService transactionService;
-	
-	@Autowired
-	private CompteService compteService;
+//
+//	@Autowired
+//	private UtilisateurService utilisateurService;
+//	
+//	@Autowired
+//	private TransactionService transactionService;
+//	
+//	@Autowired
+//	private CompteService compteService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PaymybuddyApplication.class, args);

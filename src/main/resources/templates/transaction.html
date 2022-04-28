@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http:/www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Transactions</title>
+   <link th:href="@{src/main/resources/static/styles.css}" rel="stylesheet" />
 </head>
 <body>
-
+<body>
+	<div>
+		<h1>Envoyer argent</h1>
+		<a href="findEmail">Ajouter un ami</a> <br /> <br />
+		<form th:action="@{/addTransaction}" method="POST">
+			<!-- 		<form name='f' th:object="${addTransaction}" method='POST'> -->
+			<table>
+				<tr>
+					<td><select th:field="*{transaction.destinataire}">
+							<option value="">Choisir un ami</option>
+							<option th:each="utilisateur : ${utilisateurs}"
+								th:value="${utilisateur.prenom}"
+								th:utext="${utilisateur.prenom}" />
+					</select></td>
+				</tr>
+				<tr>
+					<td><select th:field="*{transaction.montant}">
+							<option value="0" selected="selected">0€</option>
+							<option value="1">1€</option>
+							<option value="5">5€</option>
+							<option value="10">10€</option>
+					</select></td>
+				</tr>
+						<tr>
+					<td><select th:field="*{transaction.typeTransaction}">
+							<option value="bancaire" selected="selected">Bancaire</option>
+							<option value="utilisateur">Utilisateur</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td><input name="submit" type="submit" value="Payer" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div>
+		<h1>Mes transactions</h1>
+		<br />
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Destinataire</th>
+					<th>Description</th>
+					<th>Montant</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="transaction : ${transactions}">
+					<td th:text="${transaction.destinataire}"></td>
+					<td th:text="${transaction.typeTransaction}"></td>
+					<td th:text="${transaction.montant}">€</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Login - Pay My buddy</title>
+</head>
+<body>
+<div>
+<form th:action="@{/login}" method="POST" style="max-width: 400px; margin: 0 auto;">
+    <p>
+        E-mail: <input type="email" name="username" required />  
+    </p>
+    <p>
+        Password: <input type="password" name="password" required />
+    </p>
+    <p>
+        <input type="submit" value="Login"/>
+    </p>
+    	<a href="addUtilisateur">Pas encore inscrit? Inscrivez-vous ici.</a>
+</form>
+<p th:if="${loginError}" class="error">Email ou mot de passe incorrects!</p>  
+<!-- <p th:if="${emailNotExists}" class="error">Oops!  Cet email n'existe pas. Veuillez créer un compte</p>   -->
+</div>
+</body>
+</html>

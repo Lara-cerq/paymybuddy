@@ -1,11 +1,13 @@
 package com.paymybuddy.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.model.Compte;
+import com.paymybuddy.model.Utilisateur;
 import com.paymybuddy.repository.CompteRepository;
 
 @Service
@@ -24,5 +26,10 @@ public class CompteService {
 
 	public Compte addCompte(Compte compte) {
 		return compteRepository.save(compte);
+	}
+	
+	public List<Compte> getComptesByUtilisateur(Utilisateur utilisateur) {
+		return compteRepository.getComptesByUtilisateur(utilisateur);
+		
 	}
 }

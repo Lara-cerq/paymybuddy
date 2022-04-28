@@ -1,9 +1,13 @@
 package com.paymybuddy.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.paymybuddy.model.Ami;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,12 +24,16 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "utilisateur")
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur {
 
 	@Id
@@ -45,15 +53,25 @@ public class Utilisateur {
 	@Column(name = "password")
 	private String password;
 
+	@Column(name = "role")
+	private String role;
+
+	@Column(name = "enabled")
+	private boolean enabled;
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "utilisateur")
 	List<Compte> comptes = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "utilisateur")
 	List<Transaction> transactions = new ArrayList<>();
 
-	@ManyToMany
-	@JoinTable(name = "utilisateurs_amis", joinColumns = @JoinColumn(name = "id_utilisateur"), inverseJoinColumns = @JoinColumn(name = "id_ami"))
-	List<Ami> amis = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "id_utilisateur_parent")
+	@JsonBackReference
+	private Utilisateur utilisateurParent;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "utilisateurParent")
+	private Set<Utilisateur> ami = new HashSet<Utilisateur>();
 
 	public Integer getIdUtilisateur() {
 		return idUtilisateur;
@@ -111,12 +129,28 @@ public class Utilisateur {
 		this.transactions = transactions;
 	}
 
-	public List<Ami> getAmis() {
-		return amis;
+	public Utilisateur getUtilisateurParent() {
+		return utilisateurParent;
 	}
 
-	public void setAmis(List<Ami> amis) {
-		this.amis = amis;
+	public void setUtilisateurParent(Utilisateur utilisateurParent) {
+		this.utilisateurParent = utilisateurParent;
+	}
+
+	public Set<Utilisateur> getAmi() {
+		return ami;
+	}
+
+	public void setAmi(Set<Utilisateur> ami) {
+		this.ami = ami;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Utilisateur(String nom, String prenom, String email, String password) {
@@ -125,6 +159,15 @@ public class Utilisateur {
 		this.prenom = prenom;
 		this.email = email;
 		this.password = password;
+	}
+
+	public Utilisateur(String nom, String prenom, String email, String password, boolean enabled) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.password = password;
+		this.enabled = enabled;
 	}
 
 	public Utilisateur() {

@@ -1,8 +1,8 @@
-package com.paymybuddy.form;
+package com.paymybuddy.dto;
 
 import javax.persistence.Column;
 
-public class UtilisateurForm {
+public class UtilisateurDto {
 
 	private String nom;
 

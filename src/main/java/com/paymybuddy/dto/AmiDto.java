@@ -1,6 +1,6 @@
-package com.paymybuddy.form;
+package com.paymybuddy.dto;
 
-public class AmiForm {
+public class AmiDto {
 
 	private String nom;
 

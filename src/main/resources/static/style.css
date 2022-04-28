@@ -43,7 +43,7 @@ input,
 textarea,
 button {
     padding: 8px 15px;
-    border-radius: 5px !important;
+    border-radius: 5px ;
     margin: 5px 0px;
     box-sizing: border-box;
     border: 1px solid #ccc;
@@ -53,8 +53,8 @@ button {
 
 input:focus,
 textarea:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none ;
+    -webkit-box-shadow: none ;
     box-shadow: none !important;
     border: 1px solid #00BCD4;
     outline-width: 0;
@@ -63,19 +63,19 @@ textarea:focus {
 
 .btn-block {
     text-transform: uppercase;
-    font-size: 15px !important;
+    font-size: 15px;
     font-weight: 400;
     height: 43px;
     cursor: pointer
 }
 
 .btn-block:hover {
-    color: #fff !important
+    color: #fff 
 }
 
 button:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
     outline-width: 0
 }

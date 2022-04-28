@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Chercher Ami</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+	<body>
+<div>
+		<form th:action="@{/findEmail}" th:object="${amiDto}" method="POST"
+			style="max-width: 400px; margin: 0 auto;">
+			<p>
+				E-mail: <input type="email" name="email" required />
+			</p>
+			<p>
+				<input type="submit" value="submit"/>
+			</p>
+		</form>
+</div>
+</body>
+</html>
