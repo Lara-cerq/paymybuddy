@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Email non trouvé</title>
+<meta charset="UTF-8">
+<title>Email trouvé</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
@@ -19,10 +19,10 @@
 		</div>
 		<div class="card-body">
 			<form th:action="@{/addAmi}" method="POST">
-				<p>Utilisateur non trouvé!</p>
-				<p>Voulez-vous créer un nouveau utilisateur?</p>
-				<a class="btn btn-primary" href="addAmi" role="button">OUI </a> <a
-					class="btn btn-secondary" href="transaction" role="button">NON</a>
+				<p>Utilisateur trouvé! Il a été ajouté dans votre liste d'amis.</p>
+				<p>Vous pouvez réaliser des opérations vers cet utilisateur dès maintenant.</p>
+				 <a
+					class="btn btn-secondary" href="transaction" role="button">Revenir à la page Transaction</a>
 			</form>
 		</div>
 	</div>

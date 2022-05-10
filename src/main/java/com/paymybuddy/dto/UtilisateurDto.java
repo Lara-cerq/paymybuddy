@@ -1,7 +1,5 @@
 package com.paymybuddy.dto;
 
-import javax.persistence.Column;
-
 public class UtilisateurDto {
 
 	private String nom;

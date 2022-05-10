@@ -6,17 +6,32 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
-	<body>
-<div>
-		<form th:action="@{/findEmail}" th:object="${amiDto}" method="POST"
-			style="max-width: 400px; margin: 0 auto;">
-			<p>
-				E-mail: <input type="email" name="email" required />
-			</p>
-			<p>
-				<input type="submit" value="submit"/>
-			</p>
-		</form>
-</div>
+<body>
+	<div class="card">
+		<div class="card text-white bg-dark mb-3">
+			<div class="card-header">
+				<header>
+					<img src="troispoints.png" class="rounded float-left"
+						alt="paymybuddy">
+					<p class="text-center">Pay My Buddy</p>
+				</header>
+			</div>
+		</div>
+		<div class="card-body">
+			<form th:action="@{/findEmail}" th:object="${amiDto}" method="POST"
+				style="max-width: 400px; margin: 0 auto;">
+				<div>
+					<p class="text-left">
+						Insérez le mail de votre ami: <input type="email" name="email"
+							required />
+					</p>
+					<p>
+						<input class="btn btn-primary float-center" type="submit"
+							value="Chercher" />
+					</p>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

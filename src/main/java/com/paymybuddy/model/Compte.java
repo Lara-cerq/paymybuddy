@@ -15,8 +15,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "compte")
-@Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name="type_compte")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "type")
 public abstract class Compte {
 
 	@Id
@@ -27,6 +27,9 @@ public abstract class Compte {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "id_utilisateur")
 	private Utilisateur utilisateur;
+
+	@Column(name = "type_compte")
+	private String typeCompte;
 
 	public Integer getIdCompte() {
 		return idCompte;
@@ -44,6 +47,14 @@ public abstract class Compte {
 		this.utilisateur = utilisateur;
 	}
 
+	public String getTypeCompte() {
+		return typeCompte;
+	}
+
+	public void setTypeCompte(String typeCompte) {
+		this.typeCompte = typeCompte;
+	}
+
 	public Compte() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -54,4 +65,9 @@ public abstract class Compte {
 		this.utilisateur = utilisateur;
 	}
 
+	public Compte(Utilisateur utilisateur, String typeCompte) {
+		super();
+		this.utilisateur = utilisateur;
+		this.typeCompte = typeCompte;
+	}
 }
