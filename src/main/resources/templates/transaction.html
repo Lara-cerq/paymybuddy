@@ -102,6 +102,10 @@
 										<div class="alert alert-danger" role="alert"
 											th:text="${errorMessage}"></div>
 									</div>
+									<div th:if="${validMessage}">
+										<div class="alert alert-success" role="alert"
+											th:text="${validMessage}"></div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -125,10 +129,9 @@
 						<th:block th:each="mapItem : ${transactionsMap}">
 							<td id="destinataire" th:text="${mapItem.value}"></td>
 							<td th:text="${mapItem.key.typeTransaction}"></td>
-							<td th:text="${mapItem.key.montant}">€</td>
+							<td th:text="${mapItem.key.montant}"></td>
 							</tr>
 						</th:block>
-
 					</tbody>
 				</table>
 			</div>

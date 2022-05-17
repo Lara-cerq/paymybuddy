@@ -85,7 +85,7 @@ public class TransactionController {
 		List<Compte> comptes = compteService.getComptesByUtilisateur(utilisateur);
 		model.addAttribute("comptes", comptes);
 		ComptePayMyBuddy comptePayMyBuddy = compteService.getByUtilisateurAndTypeCompte(utilisateur, "utilisateur");
-		double soldeUtilisateur = comptePayMyBuddy.getSolde();
+		double soldeUtilisateur = Math.round(comptePayMyBuddy.getSolde() * 100.0) / 100.0;
 		model.addAttribute("compte", comptePayMyBuddy);
 		model.addAttribute("solde", soldeUtilisateur);
 
@@ -99,35 +99,35 @@ public class TransactionController {
 			@ModelAttribute("transactionUtilisateur") TransactionUtilisateur transactionUtilisateur, Errors errors,
 			RedirectAttributes redirectAttributes) {
 		Double montant = transaction.getMontant();
-		Double cout = 0.005 * montant;
+		Double cout = Math.round(0.005 * montant * 100.0) / 100.0;
 		String emailUtilisateurConnecte = utilisateurConnecte.getName();
 		Optional<Utilisateur> utilisateurConect = utilisateurService.findUtilisateurByEmail(emailUtilisateurConnecte);
 		Utilisateur utilisateur = utilisateurConect.get();
 		String typeTransaction = transaction.getTypeTransaction();
 		if (typeTransaction.equals("versement")) {
-			TransactionBanque newTransaction = new TransactionBanque(montant, Math.round(cout), utilisateur,
-					typeTransaction);
+			TransactionBanque newTransaction = new TransactionBanque(montant, cout, utilisateur, typeTransaction);
 			transactionService.addTransaction(newTransaction);
 			ComptePayMyBuddy compte = compteService.getByUtilisateurAndTypeCompte(utilisateur, "utilisateur");
 			Double soldeExistant = compte.getSolde();
-			compte.setSolde((soldeExistant + montant) - Math.round(cout));
+			compte.setSolde((soldeExistant + montant) - cout);
+			redirectAttributes.addFlashAttribute("validMessage", "Transaction effectuée avec succès!");
 		} else if (typeTransaction.equals("utilisateur")) {
 			ComptePayMyBuddy compte = compteService.getByUtilisateurAndTypeCompte(utilisateur, "utilisateur");
 			Double soldeExistant = compte.getSolde();
-			Double soldeNouveau = (soldeExistant - montant) - Math.round(cout);
+			Double soldeNouveau = (soldeExistant - montant) - cout;
 			if (soldeNouveau >= 0) {
 				String destinataire = transactionUtilisateur.getDestinataire();
 				TransactionUtilisateur newTransactionUtilisateur = new TransactionUtilisateur(montant, cout,
 						utilisateur, typeTransaction, destinataire);
 				transactionService.addTransaction(newTransactionUtilisateur);
-				compte.setSolde((soldeExistant - montant) - Math.round(cout));
+				compte.setSolde((soldeExistant - montant) - cout);
 				// set solde compte ami
 				List<Utilisateur> amiList = utilisateurService.getByPrenom(destinataire);
 				Utilisateur ami = amiList.get(0);
 				ComptePayMyBuddy compteAmi = compteService.getByUtilisateurAndTypeCompte(ami, "utilisateur");
 				Double soldeAmi = compteAmi.getSolde();
-				System.out.println(montant);
 				compteAmi.setSolde(soldeAmi + montant);
+				redirectAttributes.addFlashAttribute("validMessage", "Transaction effectuée avec succès!");
 			} else {
 				errors.rejectValue("montant",
 						"Solde insufisant! Veuillez réapprovisionner votre compte pour éffectuer cette opération.");
@@ -138,12 +138,12 @@ public class TransactionController {
 		} else {
 			ComptePayMyBuddy compte = compteService.getByUtilisateurAndTypeCompte(utilisateur, "utilisateur");
 			Double soldeExistant = compte.getSolde();
-			Double soldeNouveau = (soldeExistant - montant) - Math.round(cout);
+			Double soldeNouveau = (soldeExistant - montant) - cout;
 			if (soldeNouveau >= 0) {
-				TransactionBanque newTransaction = new TransactionBanque(montant, Math.round(cout), utilisateur,
-						typeTransaction);
+				TransactionBanque newTransaction = new TransactionBanque(montant, cout, utilisateur, typeTransaction);
 				transactionService.addTransaction(newTransaction);
-				compte.setSolde((soldeExistant - montant) - Math.round(cout));
+				compte.setSolde((soldeExistant - montant) - cout);
+				redirectAttributes.addFlashAttribute("validMessage", "Transaction effectuée avec succès!");
 			} else {
 				errors.rejectValue("montant",
 						"Solde insufisant! Veuillez réapprovisionner votre compte pour éffectuer cette opération.");
