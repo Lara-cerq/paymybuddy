@@ -59,6 +59,8 @@ public class TransactionController {
 		TransactionUtilisateur transactionUtilisateur = new TransactionUtilisateur();
 		model.addAttribute("transactionUtilisateur", transactionUtilisateur);
 
+		// création d'un HashMap pour pouvoir afficher les destiataires car pour
+		// certaines transactions(versement/transfert) il n'y a pas de destinataire
 		String destinataire = "";
 		List<String> destinataires = new ArrayList<>();
 		Map<Transaction, String> transactionsMap = new HashMap<Transaction, String>();
@@ -84,6 +86,7 @@ public class TransactionController {
 
 		List<Compte> comptes = compteService.getComptesByUtilisateur(utilisateur);
 		model.addAttribute("comptes", comptes);
+		// récuperer le solde
 		ComptePayMyBuddy comptePayMyBuddy = compteService.getByUtilisateurAndTypeCompte(utilisateur, "utilisateur");
 		double soldeUtilisateur = Math.round(comptePayMyBuddy.getSolde() * 100.0) / 100.0;
 		model.addAttribute("compte", comptePayMyBuddy);
@@ -104,13 +107,16 @@ public class TransactionController {
 		Optional<Utilisateur> utilisateurConect = utilisateurService.findUtilisateurByEmail(emailUtilisateurConnecte);
 		Utilisateur utilisateur = utilisateurConect.get();
 		String typeTransaction = transaction.getTypeTransaction();
+		// versement --> ajout du montant dans le solde
 		if (typeTransaction.equals("versement")) {
 			TransactionBanque newTransaction = new TransactionBanque(montant, cout, utilisateur, typeTransaction);
 			transactionService.addTransaction(newTransaction);
 			ComptePayMyBuddy compte = compteService.getByUtilisateurAndTypeCompte(utilisateur, "utilisateur");
 			Double soldeExistant = compte.getSolde();
 			compte.setSolde((soldeExistant + montant) - cout);
+			// message de validation de la transaction
 			redirectAttributes.addFlashAttribute("validMessage", "Transaction effectuée avec succès!");
+			// utilisateur --> soustraction du montant au solde
 		} else if (typeTransaction.equals("utilisateur")) {
 			ComptePayMyBuddy compte = compteService.getByUtilisateurAndTypeCompte(utilisateur, "utilisateur");
 			Double soldeExistant = compte.getSolde();
@@ -127,14 +133,15 @@ public class TransactionController {
 				ComptePayMyBuddy compteAmi = compteService.getByUtilisateurAndTypeCompte(ami, "utilisateur");
 				Double soldeAmi = compteAmi.getSolde();
 				compteAmi.setSolde(soldeAmi + montant);
+				// message de validation de la transaction
 				redirectAttributes.addFlashAttribute("validMessage", "Transaction effectuée avec succès!");
+				// affichage message d'erreur si solde insufisant
 			} else {
-				errors.rejectValue("montant",
-						"Solde insufisant! Veuillez réapprovisionner votre compte pour éffectuer cette opération.");
 				redirectAttributes.addFlashAttribute("errorMessage",
 						"Solde insufisant! Veuillez réapprovisionner votre compte pour éffectuer cette opération.");
 				return "redirect:transaction";
 			}
+			// transfert --> soustraction du montant au solde
 		} else {
 			ComptePayMyBuddy compte = compteService.getByUtilisateurAndTypeCompte(utilisateur, "utilisateur");
 			Double soldeExistant = compte.getSolde();
@@ -143,23 +150,15 @@ public class TransactionController {
 				TransactionBanque newTransaction = new TransactionBanque(montant, cout, utilisateur, typeTransaction);
 				transactionService.addTransaction(newTransaction);
 				compte.setSolde((soldeExistant - montant) - cout);
+				// message de validation de la transaction
 				redirectAttributes.addFlashAttribute("validMessage", "Transaction effectuée avec succès!");
+				// affichage message d'erreur si solde insufisant
 			} else {
-				errors.rejectValue("montant",
-						"Solde insufisant! Veuillez réapprovisionner votre compte pour éffectuer cette opération.");
 				redirectAttributes.addFlashAttribute("errorMessage",
 						"Solde insufisant! Veuillez réapprovisionner votre compte pour éffectuer cette opération.");
 				return "redirect:transaction";
 			}
 		}
 		return "redirect:transaction";
-	}
-
-	@RequestMapping("/transactionError")
-	public String transactionError(Model model, Principal utilisateurConnecte,
-			@ModelAttribute("transaction") Transaction transaction) {
-		String message = "Solde insufisant. Veuillez réapprovisionner votre compte!";
-		model.addAttribute("transactionError", true);
-		return message;
 	}
 }

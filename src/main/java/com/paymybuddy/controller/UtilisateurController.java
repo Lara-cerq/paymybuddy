@@ -79,6 +79,7 @@ public class UtilisateurController {
 
 		Utilisateur newUtilisateur = new Utilisateur(nom, prenom, email, password, true);
 		utilisateurService.addUtilisateur(newUtilisateur);
+		//création d'un compte Pay My Buddys
 		ComptePayMyBuddy compte= new ComptePayMyBuddy(newUtilisateur, "utilisateur", 0);
 		compteService.addCompte(compte);
 
@@ -110,8 +111,9 @@ public class UtilisateurController {
 		newUtilisateur.setUtilisateurParent(utilisateur);
 		List<Utilisateur> amisList = utilisateurService.ajouterAmi(newUtilisateur);
 		Set<Utilisateur> amisListSet = new HashSet<>(amisList);
+		//ajout de l'ami dans sa list d'amis
 		utilisateur.setAmi(amisListSet);
-
+		// création d'un compte Pay My Buddy
 		ComptePayMyBuddy newConmpte = new ComptePayMyBuddy(newUtilisateur, "utilisateur", 0);
 		compteService.addCompte(newConmpte);
 
@@ -136,10 +138,8 @@ public class UtilisateurController {
 		Optional<Utilisateur> optionalAmi = utilisateurService.findUtilisateurByEmail(emailAmi);
 
 		if (optionalAmi.isEmpty()) {
-			System.out.println("Ami non trouvé");
 			return "amiNonTrouve";
 		} else {
-			System.out.println("Ami trouvé --> ajouté dans la liste");
 			String emailUtilisateurConnecte = utilisateurConnecte.getName();
 			Optional<Utilisateur> utilisateurConect = utilisateurService
 					.findUtilisateurByEmail(emailUtilisateurConnecte);
@@ -155,6 +155,7 @@ public class UtilisateurController {
 			newUtilisateur.setUtilisateurParent(utilisateur);
 			List<Utilisateur> amisList = utilisateurService.ajouterAmi(ami);
 			Set<Utilisateur> amisListSet = new HashSet<>(amisList);
+			// ajout de l'ami directement dans ma list d'amis car il existe deja dans la base de données
 			utilisateur.setAmi(amisListSet);
 			return "amiTrouve";
 		}
