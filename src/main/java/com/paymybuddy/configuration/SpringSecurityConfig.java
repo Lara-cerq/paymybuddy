@@ -35,8 +35,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
-				.defaultSuccessUrl("/transaction",true).failureUrl("/login-error").and().logout().permitAll();
+		http.authorizeRequests().antMatchers("/addUtilisateur").permitAll().and().authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
+				.defaultSuccessUrl("/transaction", true).failureUrl("/login-error").and().logout().permitAll();
 		http.csrf().disable();
 	}
 
